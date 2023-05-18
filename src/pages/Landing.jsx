@@ -25,7 +25,6 @@ export function Landing(props) {
   const getContentData = () => {
     Axios.get(API_url + `/content/getContent?username=${username}`)
       .then((response) => {
-        console.log(response.data);
         dispatch(getContentAction(response.data));
       })
       .catch((err) => {

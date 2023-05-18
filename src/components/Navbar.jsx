@@ -30,14 +30,14 @@ const Navbar = (props) => {
   };
 
   return (
-    <div className="navbar d-flex flex-row">
-      <Box bg="#eff6ff" w="100%" p={3} color="#1e3a8a" marginTop="0px">
+    <div id="navbar" className="navbar d-flex flex-row">
+      <Box w="100%" p={3} color="#1e3a8a" marginTop="0px">
         <Grid templateColumns="repeat(5, 1fr)" gap={100}>
           <GridItem w="100%" h="10">
             <Flex>
               {/* <FaBookReader size={28} style={({ marginLeft: 10 }, { marginRight: 10 })} /> */}
               <Link to="/">
-                <Text fontSize="2xl" as="b">
+                <Text fontSize="2xl" as="b" marginLeft="8">
                   ConnectMe!
                 </Text>
               </Link>

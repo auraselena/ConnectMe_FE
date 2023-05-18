@@ -40,3 +40,27 @@
 /* .navbar {
   position: fixed;
 } */
+
+#bg-landing {
+  background-color: #f0f0f0
+}
+
+#navbar {
+  position: fixed;
+  background-color: white;
+  z-index: 10;
+}
+
+#footer {
+  margin-bottom: 0;
+  position: fix;
+}
+
+#coba {
+  background-color: #f0f0f0
+}
+
+/* #edit-profile {
+  margin-top: 150px;
+  z-index:1
+} */

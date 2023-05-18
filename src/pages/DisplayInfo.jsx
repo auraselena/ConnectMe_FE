@@ -35,8 +35,8 @@ const DisplayInfo = () => {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center">
-      <Container>
+    <div id="coba" className="d-flex flex-column align-items-center">
+      <Container marginTop="150px">
         <Avatar boxSize="150px" src={pfp} />
         {status == "verified" ? null : (
           <Button colorScheme="facebook" className="mb-5" onClick={verifyButton}>
@@ -44,7 +44,7 @@ const DisplayInfo = () => {
           </Button>
         )}
       </Container>
-      <Container>
+      <Container marginTop="50px">
         <TableContainer>
           <Table variant="striped" colorScheme="teal">
             <Tbody>
@@ -55,7 +55,6 @@ const DisplayInfo = () => {
               <Tr>
                 <Td>Bio</Td>
                 <Td>{bio}</Td>
-                {/* <Td isNumeric>30.48</Td> */}
               </Tr>
               <Tr>
                 <Td>Username</Td>
@@ -71,7 +70,7 @@ const DisplayInfo = () => {
         </TableContainer>
       </Container>
       <Link to="/profile">
-        <Button colorScheme="facebook" className="mb-5">
+        <Button colorScheme="facebook" className="mb-5" marginTop="50px">
           Edit my profile info
         </Button>
       </Link>

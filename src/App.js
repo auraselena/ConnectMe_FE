@@ -37,7 +37,6 @@ function App(props) {
 
   const keepLogin = () => {
     let getLocalStorage = localStorage.getItem("socmed_login");
-    console.log(getLocalStorage);
     if (getLocalStorage) {
       Axios.get(API_url + `/users/keepLogin`, {
         headers: {
