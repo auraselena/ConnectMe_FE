@@ -1,7 +1,6 @@
 import React from "react";
-import { Text, Input, InputGroup, InputRightElement, Button, ButtonGroup } from "@chakra-ui/react";
+import { Text, Input, InputGroup, InputRightElement, Button, ButtonGroup, useToast } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Axios from "axios";
 import { API_url } from "../helper";
@@ -20,6 +19,8 @@ function Login() {
   const [inputPassword, setInputPassword] = React.useState("");
   const [inputMix, setInputMix] = React.useState("");
 
+  const toast = useToast()
+
   const buttonLogin = () => {
     Axios.post(API_url + `/users/login`, {
       // username: inputUsername,
@@ -28,16 +29,27 @@ function Login() {
       // email: inputEmail,
     })
       .then((response) => {
-        console.log(response.data);
-        alert(response.data.message);
         if (response.data.success) {
           dispatch(loginAction(response.data.value));
           localStorage.setItem("socmed_login", response.data.value.token);
           navigate("/", { replace: true });
+          toast({
+            title: 'Login success!',
+            description: "You are logged in successfully.",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          })
         }
       })
       .catch((err) => {
-        console.log("Terjadi kesalahan di server!");
+        toast({
+          title: 'Login failed.',
+          description: `${err.message}`,
+          status: 'warning',
+          duration: 9000,
+          isClosable: true,
+        })
       });
   };
 

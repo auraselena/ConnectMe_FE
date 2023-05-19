@@ -1,4 +1,4 @@
-import { Avatar, Image, Button, Container, Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer } from "@chakra-ui/react";
+import { Avatar, Image, Button, Container, Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, useToast } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { API_url } from "../helper";
 import { useSelector } from "react-redux";
@@ -16,6 +16,7 @@ const DisplayInfo = () => {
     };
   });
 
+  const toast = useToast();
   const verifyButton = () => {
     let getLocalStorage = localStorage.getItem("socmed_login");
     Axios.patch(
@@ -26,11 +27,26 @@ const DisplayInfo = () => {
       }
     )
       .then((response) => {
-        console.log(response.data);
-        alert(response.data.message);
+        toast({
+          title: "Verification success!",
+          description: "Your account is now verified.",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 2000);
       })
       .catch((err) => {
-        console.log(err);
+        toast({
+          title: "Verification failed.",
+          description: `${err.message}`,
+          status: "warning",
+          duration: 9000,
+          isClosable: true,
+          isCloseComplete: () => window.location.reload(false)
+        });
       });
   };
 
@@ -59,7 +75,6 @@ const DisplayInfo = () => {
               <Tr>
                 <Td>Username</Td>
                 <Td>{username}</Td>
-
               </Tr>
               <Tr>
                 <Td>E-mail</Td>

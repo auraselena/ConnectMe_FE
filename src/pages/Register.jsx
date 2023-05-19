@@ -1,6 +1,6 @@
 import React from "react";
 // import img from "../assets/forms.png";
-import { Text, Input, InputGroup, Button, InputRightElement } from "@chakra-ui/react";
+import { Text, Input, InputGroup, Button, InputRightElement, useToast } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import Axios from "axios";
@@ -42,6 +42,8 @@ export function Register(props) {
     resolver: yupResolver(schema),
   });
 
+  const toast = useToast()
+
   const buttonRegister = () => {
     Axios.post(API_url + `/users/register`, {
       username,
@@ -50,10 +52,15 @@ export function Register(props) {
       inputPassword,
     })
       .then((response) => {
-        console.log(response.data);
-        alert(response.data.message);
         if (response.data.success) {
           navigate("/login", { replace: true });
+          toast({
+            title: 'Account created.',
+            description: "We've created your account for you.",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          })
         }
       })
       .catch((err) => {
@@ -63,8 +70,6 @@ export function Register(props) {
 
   return (
     <div className="d-flex flex-row justify-content-center shadow-lg">
-      {/* <img src={img} style={{ width: 700 }} /> */}
-      {/* <form onSubmit={handleSubmit(onSubmit)}> */}
       <form onSubmit={handleSubmit((d) => console.log(d))}>
         <div className="shadow my-5 mx-5 px-5">
           <div className="mt-4">
@@ -102,7 +107,6 @@ export function Register(props) {
               <p>{errors.password?.message}</p>
               <InputRightElement width="4.5rem">
                 <Button h="1.75rem" size="sm" onClick={handleClick}>
-                  {/* {show ? "Hide" : "Show"} */}
                   {show ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
                 </Button>
               </InputRightElement>

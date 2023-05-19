@@ -1,7 +1,7 @@
 import React from "react";
 // import img from "../assets/forms.png";
-import { Text, Input, InputGroup, Button, InputRightElement, Container, Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Text, Input, InputGroup, Button, InputRightElement, Container, Card, CardHeader, CardBody, CardFooter, useToast } from "@chakra-ui/react";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import Axios from "axios";
 import { API_url } from "../helper";
@@ -17,6 +17,9 @@ const Profile = () => {
   const [password, setPassword] = React.useState("");
   const [pfp, setPfp] = React.useState(null);
 
+  const toast = useToast();
+  const navigate = useNavigate()
+  
   const buttonEdit = () => {
     let getLocalStorage = localStorage.getItem("socmed_login");
     const formData = new FormData();
@@ -28,11 +31,26 @@ const Profile = () => {
       },
     })
       .then((response) => {
-        alert(response.data.message);
-        window.location.reload(false);
+        toast({
+          title: "Edit profile success!",
+          description: "Your profile is now up to date.",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+        setTimeout(() => {
+          navigate("/displayinfo")
+        }, 2000);
       })
       .catch((err) => {
-        console.log(err);
+        toast({
+          title: "Edit profile failed!",
+          description: `${err.message}`,
+          status: "warning",
+          duration: 9000,
+          isClosable: true,
+        });
+        window.location.reload(false);
       });
   };
 
@@ -44,9 +62,13 @@ const Profile = () => {
             <Text marginTop="4" fontSize="xl" as="b">
               Edit your profile
             </Text>
-            <Text marginTop="8" fontSize="md">Username</Text>
+            <Text marginTop="8" fontSize="md">
+              Username
+            </Text>
             <Input placeholder="username" size="md" onChange={(element) => setUsername(element.target.value)} />
-            <Text marginTop="4" fontSize="md">Password</Text>
+            <Text marginTop="4" fontSize="md">
+              Password
+            </Text>
             <InputGroup size="md">
               <Input pr="4.5rem" type={show ? "text" : "password"} placeholder="password" onChange={(element) => setPassword(element.target.value)} />
               <InputRightElement width="4.5rem">
@@ -55,11 +77,17 @@ const Profile = () => {
                 </Button>
               </InputRightElement>
             </InputGroup>
-            <Text marginTop="4" fontSize="md">Fullname</Text>
+            <Text marginTop="4" fontSize="md">
+              Fullname
+            </Text>
             <Input placeholder="fullname" size="md" onChange={(element) => setFullname(element.target.value)} />
-            <Text marginTop="4" fontSize="md">Bio</Text>
+            <Text marginTop="4" fontSize="md">
+              Bio
+            </Text>
             <Input placeholder="bio" size="md" onChange={(element) => setBio(element.target.value)} />
-            <Text marginTop="4" fontSize="md">Profile photo</Text>
+            <Text marginTop="4" fontSize="md">
+              Profile photo
+            </Text>
             <InputGroup size="md">
               <Input type="file" placeholder="profile photo" onChange={(element) => setPfp(element.target.files[0])} />
             </InputGroup>

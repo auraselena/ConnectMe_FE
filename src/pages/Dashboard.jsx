@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody, CardFooter, Flex, Avatar, Box, Heading, Text, IconButton, Image, Button, Container } from "@chakra-ui/react";
+import { Card, CardHeader, CardBody, CardFooter, Flex, Avatar, Box, Heading, Text, IconButton, Image, Button, Container, useToast } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { BiLike, BiChat, BiShare } from "react-icons/bi";
 import Axios from "axios";
@@ -23,13 +23,20 @@ export const Dashboard = () => {
     };
   });
 
+  const toast = useToast()
   const getContentData = () => {
     Axios.get(API_url + `/content/getAllContent`)
       .then((response) => {
         dispatch(getContentAction(response.data));
       })
       .catch((err) => {
-        console.log(err);
+        toast({
+          title: 'Cannot get content data.',
+          description: `${err.message}`,
+          status: 'warning',
+          duration: 9000,
+          isClosable: true,
+        })
       });
   };
 
